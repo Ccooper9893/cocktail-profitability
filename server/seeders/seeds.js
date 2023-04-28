@@ -3,6 +3,38 @@ const { User, Product, Recipe } = require('../models');
 
 db.once('open', async () => {
 
+    await Product.deleteMany();
+
+    const products = await Product.insertMany([
+        {
+            name: 'Hornitos',
+            price: 25.45,
+            size: 1
+        },
+        {
+            name: 'Jack Daniels',
+            price: 18.45,
+            size: 1
+        },
+        {
+            name: 'Triple Sec',
+            price: 13.00,
+            size: 1
+        },
+        {
+            name: 'Limemade',
+            price: 10.34,
+            size: 10
+        },
+        {
+            name: 'Coke',
+            price: 80.45,
+            size: 10
+        },
+    ]);
+
+    console.log('Products seeded');
+
     await Recipe.deleteMany();
 
     const recipes = await Recipe.insertMany([
@@ -13,16 +45,19 @@ db.once('open', async () => {
             ingredients: [
                 {
                     name: 'Hornitos',
+                    product: products[0]._id,
                     amount: 1.5,
                     cost: .95
                 },
                 {
                     name: 'Triple Sec',
+                    product: products[2]._id,
                     amount: .75,
                     cost: .50
                 },
                 {
                     name: 'Limeade',
+                    product: products[3]._id,
                     amount: 3,
                     cost: .35
                 },
@@ -58,47 +93,13 @@ db.once('open', async () => {
                     amount: 2,
                     cost: .27
                 },
-
             ],
         },
     ]);
 
+    console.log('Recipes seeded')
 
-    console.log('Recipes seeded.');
-
-    Product.deleteMany();
-
-    const products = await Product.insertMany([
-        {
-            name: 'Hornitos',
-            price: 25.45,
-            size: 1
-        },
-        {
-            name: 'Jack Daniels',
-            price: 18.45,
-            size: 1
-        },
-        {
-            name: 'Triple Sec',
-            price: 13.00,
-            size: 1
-        },
-        {
-            name: 'Limemade',
-            price: 10.34,
-            size: 10
-        },
-        {
-            name: 'Coke',
-            price: 80.45,
-            size: 10
-        },
-    ]);
-
-    console.log('Products seeded');
-
-    User.deleteMany();
+    await User.deleteMany();
 
     const users = User.insertMany([
         {
@@ -117,6 +118,6 @@ db.once('open', async () => {
         }
     ]);
 
-console.log('Users seeded');
+    console.log('Users seeded');
 
 });
