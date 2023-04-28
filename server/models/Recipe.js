@@ -10,11 +10,11 @@ const ingredientSchema = new Schema({
         ref: 'Product',
     },
     amount: {
-        type: Schema.Types.Decimal128,
+        type: Number,
         required: true,
     },
     cost: {
-        type: Schema.Types.Decimal128,
+        type: Number,
         required: true,
     },
 });
@@ -25,11 +25,11 @@ const recipeSchema = new Schema({
         required: true,
     },
     cost: {
-        type: Schema.Types.Decimal128,
+        type: Number,
         required: true,
     },
     price: {
-        type: Schema.Types.Decimal128,
+        type: Number,
         required: true,
     },
     ingredients: [ingredientSchema],

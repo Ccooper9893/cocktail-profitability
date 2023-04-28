@@ -12,23 +12,23 @@ const typeDefs = gql`
     type Product {
         _id: ID!
         name: String
-        price: Decimal
-        size: Decimal
+        price: Float
+        size: Float
     }
 
     type Ingredient {
         _id: ID!
         name: String
         product: [Product]
-        amount: Decimal
-        cost: Decimal
+        amount: Float
+        cost: Float
       }
       
       type Recipe {
         _id: ID!
         name: String
-        cost: Decimal
-        price: Decimal
+        cost: Float
+        price: Float
         ingredients: [Ingredient]
       }
 
@@ -38,18 +38,13 @@ const typeDefs = gql`
     }
 
     type Query {
-        
+        me: User
     }
 
     type Mutation {
-        addUser(username: String!, email: String!, password: String!, merchant: Boolean, business_name: String, business_description: String, phone_number: String, image: String, address: String): Auth
+        addUser(username: String!, email: String!, password: String!): Auth
         loginUser(email: String!, password: String!): Auth
-        addProduct(name: String, product_description: String, category: String, stock: Int, price: Float, image: String): Product
-        removeProduct(id: ID!): Product
-        addPurchase(products: [ID]!) : Purchase
-        updateStock(stock: Int, id: ID!) : Product
-        updateProduct(price: Float, stock: Int, id: ID!) : Product
-        deleteProduct(id: ID!) : Product
+        addProduct(name: String!, price: Float, size: Float): Product
     }
 `;
 
