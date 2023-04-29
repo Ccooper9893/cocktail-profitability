@@ -18,9 +18,9 @@ const typeDefs = gql`
 
     type Ingredient {
         _id: ID!
-        product: ID!
+        product: Product
         amount: Float
-      }
+    }
       
     type Recipe {
         _id: ID!
