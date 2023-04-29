@@ -1,5 +1,17 @@
 const { Schema, model } = require('mongoose');
 
+const ingredientSchema = new Schema({
+    product: {
+        type: Schema.Types.ObjectId,
+        ref: 'Product',
+    },
+    amount: {
+        type: Number,
+        required: true,
+        //Will be in ounces
+    }
+})
+
 const recipeSchema = new Schema({
     name: {
         type: String,
@@ -13,12 +25,7 @@ const recipeSchema = new Schema({
         type: Number,
         required: true,
     },
-    ingredients: [
-        {
-            type: Schema.Types.ObjectId,
-            ref: 'Ingredient',
-        }
-    ],
+    ingredients: [ingredientSchema],
 });
 
 const Recipe = model('Recipe', recipeSchema);

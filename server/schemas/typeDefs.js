@@ -7,7 +7,6 @@ const typeDefs = gql`
         email: String
         products: [Product]
         recipes: [Recipe]
-        ingredients: [Ingredient]
     }
 
     type Product {
@@ -23,13 +22,18 @@ const typeDefs = gql`
         amount: Float
       }
       
-      type Recipe {
+    type Recipe {
         _id: ID!
         name: String
         cost: Float
         price: Float
         ingredients: [Ingredient]
-      }
+    }
+
+    input IngredientInput {
+        product: ID!
+        amount: Float
+    }
 
     type Auth {
         token: ID!
@@ -44,8 +48,7 @@ const typeDefs = gql`
         addUser(username: String!, email: String!, password: String!): Auth
         loginUser(email: String!, password: String!): Auth
         addProduct(name: String!, price: Float, size: Float): Product
-        addIngredient(product: ID!, amount: Float!) : Ingredient
-        addRecipe(name: String!, cost: Float!, price: Float!, ingredients: [ID!]): Recipe
+        addRecipe(name: String!, cost: Float!, price: Float!, ingredients: [IngredientInput]!): Recipe
     }
 `;
 

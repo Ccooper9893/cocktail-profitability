@@ -5,25 +5,26 @@ const { signToken } = require('../utils/jwt-auth');
 const resolvers = {
 
     Query: {
+
         me: async (_, __, context) => {
 
             if (context.user) {
                 return await User.findById(context.user._id)
-                .populate({ path: 'products', select: '-__v' })
-                .populate({path: 'recipes',select: '-__v'})
-                .populate({path: 'ingredients', select: '-__v'});
+                    .populate({ path: 'products', select: '-__v' })
+                    .populate({ path: 'recipes', select: '-__v', populate: {path: 'ingredients'}})
             };
-
             throw new AuthenticationError('You must be logged in to view content!');
         },
     },
+
     Mutation: {
-        //Create user and sign token
+
         addUser: async (_, args,) => {
             const user = await User.create(args);
             const token = signToken(user);
             return { token, user };
         },
+
         loginUser: async (_, { email, password }) => {
             const user = await User.findOne({ email });
             if (!user) {
@@ -38,6 +39,7 @@ const resolvers = {
 
             return { token, user };
         },
+
         addProduct: async (_, args, context) => {
             if (!context.user) {
                 throw new AuthenticationError('You must be logged in to use this feature');
@@ -52,10 +54,13 @@ const resolvers = {
 
             return product;
         },
+
         addRecipe: async (_, args, context) => {
+
             if (!context.user) {
                 throw new AuthenticationError('You must be logged in to use this feature');
             }
+
             const recipe = await Recipe.create(args);
             await User.findOneAndUpdate(
                 { _id: context.user._id },
@@ -64,16 +69,6 @@ const resolvers = {
             );
             return recipe;
         },
-        addIngredient: async (_, args, context) => {
-            if (!context.user) {
-                throw new AuthenticationError('You must be logged in to use this feature');
-            }
-            const ingredient = await Ingredient.create(args);
-            await User.findByIdAndUpdate(context.user._id,
-                { $addToSet: { ingredients: ingredient }},
-            );
-            return ingredient;
-        }
     }
 };
 

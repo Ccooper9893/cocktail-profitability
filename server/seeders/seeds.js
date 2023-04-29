@@ -1,5 +1,5 @@
 const db = require('../config/connection');
-const { User, Product, Recipe, Ingredient } = require('../models');
+const { User, Product, Recipe } = require('../models');
 
 db.once('open', async () => {
 
@@ -35,22 +35,22 @@ db.once('open', async () => {
 
     console.log('Products seeded');
 
-    await Ingredient.deleteMany();
+    // await Ingredient.deleteMany();
 
-    const ingredients = await Ingredient.insertMany([
-        {
-            product: products[0]._id,
-            amount: 1.5
-        },
-        {
-            product: products[2]._id,
-            amount: 0.75
-        },
-        {
-            product: products[3]._id,
-            amount: 2.5
-        },
-    ])
+    // const ingredients = await Ingredient.insertMany([
+    //     {
+    //         product: products[0]._id,
+    //         amount: 1.5
+    //     },
+    //     {
+    //         product: products[2]._id,
+    //         amount: 0.75
+    //     },
+    //     {
+    //         product: products[3]._id,
+    //         amount: 2.5
+    //     },
+    // ])
 
     await Recipe.deleteMany();
 
@@ -60,9 +60,14 @@ db.once('open', async () => {
             cost: 2.56,
             price: 5,
             ingredients: [
-                ingredients[0]._id,
-                ingredients[1]._id,
-                ingredients[2]._id,
+                {
+                    product: products[0]._id,
+                    amount: 1.5
+                },
+                {
+                    product: products[1]._id,
+                    amount: 1.5
+                },
             ],
         },
     ]);
@@ -78,7 +83,6 @@ db.once('open', async () => {
             email: 'cody@email.com',
             products: [products[0]._id, products[1]._id],
             recipes: [recipes[0]._id],
-            ingredients: [ingredients[0]._id, ingredients[1]._id, ingredients[2]._id]
         }
     );
 
