@@ -1,5 +1,5 @@
 const db = require('../config/connection');
-const { User, Product, Recipe } = require('../models');
+const { User, Product, Recipe, Ingredient } = require('../models');
 
 db.once('open', async () => {
 
@@ -35,6 +35,23 @@ db.once('open', async () => {
 
     console.log('Products seeded');
 
+    await Ingredient.deleteMany();
+
+    const ingredients = await Ingredient.insertMany([
+        {
+            product: products[0]._id,
+            amount: 1.5
+        },
+        {
+            product: products[2]._id,
+            amount: 0.75
+        },
+        {
+            product: products[3]._id,
+            amount: 2.5
+        },
+    ])
+
     await Recipe.deleteMany();
 
     const recipes = await Recipe.insertMany([
@@ -43,56 +60,9 @@ db.once('open', async () => {
             cost: 2.56,
             price: 5,
             ingredients: [
-                {
-                    name: 'Hornitos',
-                    product: products[0]._id,
-                    amount: 1.5,
-                    cost: .95
-                },
-                {
-                    name: 'Triple Sec',
-                    product: products[2]._id,
-                    amount: .75,
-                    cost: .50
-                },
-                {
-                    name: 'Limeade',
-                    product: products[3]._id,
-                    amount: 3,
-                    cost: .35
-                },
-            ],
-        },
-        {
-            name: 'Long Island Iced Tea',
-            cost: 2.34,
-            price: 6,
-            ingredients: [
-                {
-                    name: 'Amsterdam Gin',
-                    amount: 1,
-                    cost: .62
-                },
-                {
-                    name: 'Elevate Vodka',
-                    amount: 1,
-                    cost: .45
-                },
-                {
-                    name: 'Triple Sec',
-                    amount: 1,
-                    cost: .14
-                },
-                {
-                    name: 'Limeade',
-                    amount: 2,
-                    cost: .23
-                },
-                {
-                    name: 'Coke',
-                    amount: 2,
-                    cost: .27
-                },
+                ingredients[0]._id,
+                ingredients[1]._id,
+                ingredients[2]._id,
             ],
         },
     ]);
@@ -101,22 +71,16 @@ db.once('open', async () => {
 
     await User.deleteMany();
 
-    const users = User.insertMany([
+    const users = User.create(
         {
             username: 'Cody',
             password: 'Password123',
             email: 'cody@email.com',
             products: [products[0]._id, products[1]._id],
-            recipes: [recipes[0]._id]
-        },
-        {
-            username: 'User1',
-            password: 'Password123',
-            email: 'user@email.com',
-            products: [products[2]._id, products[3]._id],
-            recipes: [recipes[1]._id]
+            recipes: [recipes[0]._id],
+            ingredients: [ingredients[0]._id, ingredients[1]._id, ingredients[2]._id]
         }
-    ]);
+    );
 
     console.log('Users seeded');
 

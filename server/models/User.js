@@ -26,6 +26,10 @@ const userSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Recipe',
     }],
+    ingredients: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Ingredient'
+    }]
 });
 
 // hook checks if the password has been modified before hashing it and updating password on user object
