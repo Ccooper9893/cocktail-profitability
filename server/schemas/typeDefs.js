@@ -42,14 +42,27 @@ const typeDefs = gql`
 
     type Query {
         me: User
+        getRecipes: User
+        getProducts: User
     }
 
     type Mutation {
         addUser(username: String!, email: String!, password: String!): Auth
         loginUser(email: String!, password: String!): Auth
+
         addProduct(name: String!, price: Float, size: Float): Product
+        updateProduct(id: ID!, price: Float!, size: Float!): Product
+        deleteProduct(id: ID!): Product
+
         addRecipe(name: String!, cost: Float!, price: Float!, ingredients: [IngredientInput]!): Recipe
+        updateRecipe(id: ID!, name: String, cost: Float, price: Float, ingredients: [IngredientInput]): Recipe
     }
 `;
 
 module.exports = typeDefs;
+
+/* 
+
+        deleteRecipe(id: ID!): Recipe
+
+*/

@@ -31,32 +31,19 @@ db.once('open', async () => {
             price: 80.45,
             size: 10
         },
+        {
+            name: 'Don Julio',
+            price: 25.45,
+            size: 1
+        }
     ]);
-
     console.log('Products seeded');
-
-    // await Ingredient.deleteMany();
-
-    // const ingredients = await Ingredient.insertMany([
-    //     {
-    //         product: products[0]._id,
-    //         amount: 1.5
-    //     },
-    //     {
-    //         product: products[2]._id,
-    //         amount: 0.75
-    //     },
-    //     {
-    //         product: products[3]._id,
-    //         amount: 2.5
-    //     },
-    // ])
 
     await Recipe.deleteMany();
 
     const recipes = await Recipe.insertMany([
         {
-            name: 'Margarita',
+            name: 'House Margarita',
             cost: 2.56,
             price: 5,
             ingredients: [
@@ -70,6 +57,25 @@ db.once('open', async () => {
                 },
             ],
         },
+        {
+            name: 'Top-shelf Margarita',
+            cost: 3.45,
+            price: 8,
+            ingredients: [
+                {
+                    product: products[5]._id,
+                    amount: 1.5
+                },
+                {
+                    product: products[2]._id,
+                    amount: 0.75
+                },
+                {
+                    product: products[3]._id,
+                    amount: 1.5
+                },
+            ],
+        },
     ]);
 
     console.log('Recipes seeded')
@@ -79,10 +85,10 @@ db.once('open', async () => {
     const users = User.create(
         {
             username: 'Cody',
-            password: 'Password123',
+            password: 'password123',
             email: 'cody@email.com',
-            products: [products[0]._id, products[1]._id],
-            recipes: [recipes[0]._id],
+            products: [products[0]._id, products[1]._id, products[2]._id, products[3]._id, products[4]._id, products[5]._id],
+            recipes: [recipes[0]._id, recipes[1]._id],
         }
     );
 

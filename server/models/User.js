@@ -1,4 +1,5 @@
 const { Schema, model } = require('mongoose');
+const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 
 const userSchema = new Schema({
@@ -26,10 +27,6 @@ const userSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Recipe',
     }],
-    ingredients: [{
-        type: Schema.Types.ObjectId,
-        ref: 'Ingredient'
-    }]
 });
 
 // hook checks if the password has been modified before hashing it and updating password on user object
@@ -44,6 +41,16 @@ userSchema.pre('save', async function (next) {
 userSchema.methods.isCorrectPassword = async function (password) {
     return bcrypt.compare(password, this.password);
 };
+
+userSchema.methods.isRecipeOwner = async function (id) {
+    const objectId = new mongoose.Types.ObjectId(id);
+    return this.recipes.includes(objectId);
+}
+
+userSchema.methods.isProductOwner = async function (id) {
+    const objectId = new mongoose.Types.ObjectId(id);
+    return this.products.includes(objectId);
+}
 
 const User = model('User', userSchema);
 

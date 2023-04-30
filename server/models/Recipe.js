@@ -10,7 +10,7 @@ const ingredientSchema = new Schema({
         required: true,
         //Will be in ounces
     }
-})
+});
 
 const recipeSchema = new Schema({
     name: {
