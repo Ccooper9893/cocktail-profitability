@@ -1,4 +1,5 @@
 const { Schema, model } = require('mongoose');
+const Product = require('./Product');
 
 const ingredientSchema = new Schema({
     product: {
@@ -9,7 +10,17 @@ const ingredientSchema = new Schema({
         type: Number,
         required: true,
         //Will be in ounces
+    },
+    cost: {
+        type: Number,
     }
+});
+
+ingredientSchema.pre('save', async function(next) {
+    const product = await Product.findById(this.product.toString());
+    const pricePerOunce = Number.parseFloat(product.price/(product.size * 33.81)).toFixed(2);
+    this.cost = Number.parseFloat(pricePerOunce * this.amount).toFixed(2);
+    next();
 });
 
 const recipeSchema = new Schema({
