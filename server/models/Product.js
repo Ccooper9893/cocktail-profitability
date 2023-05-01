@@ -11,7 +11,8 @@ const productSchema = new Schema({
     },
     size: {
         type: Number,
-        required: true
+        required: true,
+        //Will be in liters
     }
 });
 

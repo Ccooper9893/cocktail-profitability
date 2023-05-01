@@ -23,20 +23,33 @@ db.once('open', async () => {
         },
         {
             name: 'Limemade',
-            price: 10.34,
+            price: 5.48,
             size: 10
         },
         {
             name: 'Coke',
-            price: 80.45,
-            size: 10
+            price: 2.45,
+            size: 1
         },
         {
             name: 'Don Julio',
             price: 25.45,
             size: 1
-        }
+        },
+        {
+            name: 'Bombay Gin',
+            price: 23.45,
+            size: 1,
+        },
+        {
+            name: 'Tonic Water',
+            price: 2.13,
+            size: 1,
+        },
+
+        
     ]);
+
     console.log('Products seeded');
 
     await Recipe.deleteMany();
@@ -51,8 +64,12 @@ db.once('open', async () => {
                     amount: 1.5
                 },
                 {
-                    product: products[1]._id,
+                    product: products[3]._id,
                     amount: 1.5
+                },
+                {
+                    product: products[2]._id,
+                    amount: 0.75
                 },
             ],
         },
@@ -74,13 +91,41 @@ db.once('open', async () => {
                 },
             ],
         },
+        {
+            name: 'Jack & Coke',
+            price: 5,
+            ingredients: [
+                {
+                    product: products[1]._id,
+                    amount: 1.5
+                },
+                {
+                    product: products[4]._id,
+                    amount: 3
+                },
+            ],
+        },
+        {
+            name: 'Gin & Tonic',
+            price: 5,
+            ingredients: [
+                {
+                    product: products[6]._id,
+                    amount: 1.5
+                },
+                {
+                    product: products[7]._id,
+                    amount: 3
+                },
+            ],
+        },
     ]);
 
     console.log('Recipes seeded')
 
     await User.deleteMany();
 
-    const users = User.create(
+    await User.create(
         {
             username: 'Cody',
             password: 'password123',
