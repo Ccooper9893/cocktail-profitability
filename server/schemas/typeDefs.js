@@ -56,13 +56,8 @@ const typeDefs = gql`
 
         addRecipe(name: String!, cost: Float!, price: Float!, ingredients: [IngredientInput]!): Recipe
         updateRecipe(id: ID!, name: String, cost: Float, price: Float, ingredients: [IngredientInput]): Recipe
+        deleteRecipe(id: ID!): Recipe
     }
 `;
 
 module.exports = typeDefs;
-
-/* 
-
-        deleteRecipe(id: ID!): Recipe
-
-*/

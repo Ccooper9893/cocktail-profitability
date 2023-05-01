@@ -132,17 +132,28 @@ const resolvers = {
             throw new AuthenticationError('You must be logged in to use this feature');
         },
 
-        updateRecipe: async (_, args, context) => {
+        updateRecipe: async (_, {id, name, cost, price, ingredients}, context) => {
+            if (context.user) {
+                const user = await User.findById(context.user._id);
+                const isOwner = await user.isRecipeOwner(id);
+                if (isOwner) {
+                    return await Recipe.findByIdAndUpdate(id, {name, cost, price, ingredients}, {new: true});
+                } else {
+                    throw new ForbiddenError('Must be owner of product to update.');
+                };
+            };
+
+            throw new AuthenticationError('You must be logged in to use this feature');
+        },
+
+        deleteRecipe: async (_, args, context) => {
             if (context.user) {
                 const user = await User.findById(context.user._id);
                 const isOwner = await user.isRecipeOwner(args.id);
                 if (isOwner) {
-                    const updatedArgs = args;
-                    delete updatedArgs.id;
-                    console.log(updatedArgs);
-                    return await Recipe.findByIdAndUpdate(args.id, updatedArgs, { new: true });
+                    return await Recipe.findByIdAndDelete(args.id);
                 } else {
-                    throw new ForbiddenError('Must be owner of product to update.');
+                    throw new ForbiddenError('Must be owner of product to delete.');
                 };
             };
 
