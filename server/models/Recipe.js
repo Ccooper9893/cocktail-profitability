@@ -13,7 +13,7 @@ const ingredientSchema = new Schema({
     },
     cost: {
         type: Number,
-    }
+    },
 });
 
 ingredientSchema.pre('save', async function(next) {
@@ -30,13 +30,18 @@ const recipeSchema = new Schema({
     },
     cost: {
         type: Number,
-        required: true,
     },
     price: {
         type: Number,
         required: true,
     },
     ingredients: [ingredientSchema],
+});
+
+recipeSchema.pre('save', async function(next) {
+    const cost = this.ingredients.reduce((total, ingredient) => total + ingredient.cost, 0);
+    this.cost = cost;
+    next();
 });
 
 const Recipe = model('Recipe', recipeSchema);

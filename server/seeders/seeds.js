@@ -44,7 +44,6 @@ db.once('open', async () => {
     const recipes = await Recipe.insertMany([
         {
             name: 'House Margarita',
-            cost: 2.56,
             price: 5,
             ingredients: [
                 {
@@ -59,7 +58,6 @@ db.once('open', async () => {
         },
         {
             name: 'Top-shelf Margarita',
-            cost: 3.45,
             price: 8,
             ingredients: [
                 {

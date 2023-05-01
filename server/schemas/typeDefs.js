@@ -20,6 +20,7 @@ const typeDefs = gql`
         _id: ID!
         product: Product
         amount: Float
+        cost: Float
     }
       
     type Recipe {
@@ -54,8 +55,8 @@ const typeDefs = gql`
         updateProduct(id: ID!, price: Float!, size: Float!): Product
         deleteProduct(id: ID!): Product
 
-        addRecipe(name: String!, cost: Float!, price: Float!, ingredients: [IngredientInput]!): Recipe
-        updateRecipe(id: ID!, name: String, cost: Float, price: Float, ingredients: [IngredientInput]): Recipe
+        addRecipe(name: String!, price: Float!, ingredients: [IngredientInput]!): Recipe
+        updateRecipe(id: ID!, name: String, price: Float, ingredients: [IngredientInput]): Recipe
         deleteRecipe(id: ID!): Recipe
     }
 `;
