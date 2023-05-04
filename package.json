@@ -1,0 +1,24 @@
+{
+  "name": "cocktail-profitability",
+  "version": "1.0.0",
+  "description": "Bar management and profit calculator application",
+  "main": "server/server.js",
+  "scripts": {
+    "start": "node server/server.js",
+    "develop": "concurrently \"cd server && npm run watch\" \"cd client && npm start\"",
+    "install": "cd server && npm i && cd ../client && npm i",
+    "seed": "cd server && npm run seed",
+    "build": "cd client && npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Ccooper9893/Cocktail-Profitability.git"
+  },
+  "keywords": [],
+  "author": "Cody Cooper",
+  "license": "MIT",
+  "homepage": "https://github.com/Ccooper9893/Cocktail-Profitability#readme",
+  "devDependencies": {
+    "concurrently": "^8.0.1"
+  }
+}
