@@ -5,7 +5,7 @@ db.once('open', async () => {
 
     await Product.deleteMany();
 
-    const products = await Product.insertMany([
+    const products = await Product.create([
         {
             name: 'Hornitos',
             price: 25.45,
@@ -54,7 +54,7 @@ db.once('open', async () => {
 
     await Recipe.deleteMany();
 
-    const recipes = await Recipe.insertMany([
+    const recipes = await Recipe.create([
         {
             name: 'House Margarita',
             price: 5,
@@ -130,8 +130,8 @@ db.once('open', async () => {
             username: 'Cody',
             password: 'password123',
             email: 'cody@email.com',
-            products: [products[0]._id, products[1]._id, products[2]._id, products[3]._id, products[4]._id, products[5]._id],
-            recipes: [recipes[0]._id, recipes[1]._id],
+            products: [...products].map(product => product._id),
+            recipes: [...recipes].map(recipe => recipe._id),
         }
     );
 
