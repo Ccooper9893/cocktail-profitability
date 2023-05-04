@@ -35,12 +35,15 @@ const recipeSchema = new Schema({
         type: Number,
         default: 0,
     },
+    profit: {
+        type: Number,
+    },
     ingredients: [ingredientSchema],
 });
 
 recipeSchema.pre('save', async function(next) {
-    const cost = this.ingredients.reduce((total, ingredient) => total + ingredient.cost, 0);
-    this.cost = cost;
+    this.cost = this.ingredients.reduce((total, ingredient) => total + ingredient.cost, 0);
+    this.profit = this.price - this.cost;
     next();
 });
 

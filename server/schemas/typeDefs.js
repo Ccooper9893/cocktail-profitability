@@ -28,6 +28,7 @@ const typeDefs = gql`
         name: String
         cost: Float
         price: Float
+        profit: Float
         ingredients: [Ingredient]
     }
 
